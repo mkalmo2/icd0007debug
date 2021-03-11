@@ -1,6 +1,8 @@
 <?php
 
-var_dump($_POST);
+$name = $_POST['name'] ?? '';
+
+print $name;
 
 ?>
 
@@ -12,10 +14,14 @@ var_dump($_POST);
 </head>
 <body>
 
-    <form method="post">
-        <input />
+    <form>
+        <input id="name"/>
 
-        <button>Button</button>
+        <br />
+
+        <button>Save</button>
+
+        <button>Delete</button>
     </form>
 
 </body>
