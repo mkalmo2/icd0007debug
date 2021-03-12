@@ -12,10 +12,9 @@ class Post {
         $this->text = $text;
     }
 
-//    public function __toString() : string {
-//        return sprintf('Id: %s, Title: %s, Text: %s' . PHP_EOL,
-//            $this->id, $this->title, $this->text);
-//    }
-
+    public function __toString() : string {
+        return sprintf('Id: %s, Title: %s, Text: %s' . PHP_EOL,
+            $this->id, $this->title, $this->text);
+    }
 
 }
