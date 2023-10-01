@@ -19,9 +19,9 @@ $message = $_GET['message'] ?? '';
 <?php else: ?>
 
     <form action="saver.php" method="post">
-        <input id="data" />
+        <input name="data" />
 
-        <button>Save</button>
+        <button id="save">Save</button>
     </form>
 
 <?php endif; ?>
