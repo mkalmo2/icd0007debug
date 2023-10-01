@@ -21,7 +21,7 @@ $message = $_GET['message'] ?? '';
     <form action="saver.php" method="post">
         <input name="data" />
 
-        <button id="save">Save</button>
+        <button name="save">Save</button>
     </form>
 
 <?php endif; ?>
