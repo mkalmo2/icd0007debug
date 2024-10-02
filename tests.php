@@ -71,6 +71,4 @@ setLogRequests(false);
 setLogPostParameters(false);
 setPrintPageSourceOnError(false);
 
-#Helpers
-
 stf\runTests(getPassFailReporter(4));
