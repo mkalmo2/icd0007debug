@@ -35,7 +35,7 @@ test('Checks correct radio', function () {
 
     assertThat(getFieldValue('grade'), is('3'));
 
-    navigateTo(BASE_URL . '/ex4/radios.php?grade=4');
+    navigateTo(BASE_URL . '/radios.php?grade=4');
 
     assertThat(getFieldValue('grade'), is('4'));
 });
