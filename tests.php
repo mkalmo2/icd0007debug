@@ -4,7 +4,7 @@ require_once 'vendor/php-test-framework/public-api.php';
 
 const BASE_URL = 'http://localhost:8080';
 
-function confirmationWorksWithSimpleText() {
+test('Confirmation works with simple text', function () {
     navigateTo(BASE_URL . '/confirm/');
 
     setTextFieldValue('text', 'hello');
@@ -14,9 +14,9 @@ function confirmationWorksWithSimpleText() {
     clickLinkWithText('Confirm');
 
     assertPageContainsText('Confirmed: hello');
-}
+});
 
-function confirmationWorksWithDifferentSymbols() {
+test('Confirmation works with different symbols', function () {
     navigateTo(BASE_URL . '/confirm/');
 
     $text = "hello'\"\n";
@@ -28,9 +28,9 @@ function confirmationWorksWithDifferentSymbols() {
     clickLinkWithText('Confirm');
 
     assertPageContainsText('Confirmed: ' . $text);
-}
+});
 
-function checksCorrectRadio() {
+test('Checks correct radio', function () {
     navigateTo(BASE_URL . '/radios.php');
 
     assertThat(getFieldValue('grade'), is('3'));
@@ -38,9 +38,9 @@ function checksCorrectRadio() {
     navigateTo(BASE_URL . '/ex4/radios.php?grade=4');
 
     assertThat(getFieldValue('grade'), is('4'));
-}
+});
 
-function calculatesArithmeticExpressions() {
+test('Checks correct radio', function () {
     navigateTo(BASE_URL . '/calc/');
 
     setTextFieldValue('number', '4');
@@ -64,7 +64,7 @@ function calculatesArithmeticExpressions() {
     clickButton('cmd', 'evaluate');
 
     assertThat(getFieldValue('display'), is('9'));
-}
+});
 
 setBaseUrl(BASE_URL);
 setLogRequests(false);

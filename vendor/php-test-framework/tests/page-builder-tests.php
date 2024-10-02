@@ -38,6 +38,21 @@ function buildFormWithUncheckedInputs() {
     assertThat($form->getSelectByName('s1')->getValue(), is(null));
 }
 
+function findElementByInnerText() {
+
+    $html = '<main>
+                 <div data-task-id="id1">abc</div>
+             </main>';
+
+    $page = getPage($html);
+
+    $element = $page->getElementByInnerText('abc');
+
+    $id = $element->getAttributeValue('data-task-id');
+
+    assertThat($id, is('id1'));
+}
+
 #Helpers
 
 function getPage(string $html) : Page {

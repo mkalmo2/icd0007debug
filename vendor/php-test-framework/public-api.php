@@ -2,10 +2,10 @@
 
 list ($phpMajorVersion, $phpMinorVersion) = explode('.', PHP_VERSION);
 
-if (intval($phpMajorVersion) < 7
-    || intval($phpMajorVersion) === 7 && intval($phpMinorVersion) < 4) {
+if (intval($phpMajorVersion) < 8
+    || intval($phpMajorVersion) === 8 && intval($phpMinorVersion) < 0) {
 
-    die('This framework requires Php version 7.4 or greater. '.
+    die('This framework requires Php version 8.0 or greater. '.
         "Found Php version " . PHP_VERSION . '.' . PHP_EOL);
 }
 
@@ -447,8 +447,8 @@ function getSelectOptionValues(string $fieldName): array {
         ->getSelectByName($fieldName)->getOptionValues();
 }
 
-function deleteSessionCookie(): void {
-    throw new Error('not implemented');
+function deleteCookies(): void {
+    getBrowser()->reset();
 }
 
 function closeBrowser() {

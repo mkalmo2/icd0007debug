@@ -149,6 +149,27 @@ function buildsButtonsWithValue() {
     assertThat($button->getValue(), is('c1'));
 }
 
+function buildsSubmitButton() {
+    $html = '<form>
+             <button type="reset" name="cmd" 
+                     value="c1">Cmd 1</button>
+             <button type="submit" name="cmd" 
+                     value="c2">Cmd 2</button>
+             <button name="cmd" 
+                     value="c3">Cmd 3</button>
+             </form>';
+
+    $formSet = getFormSet($html);
+
+    $button1 = $formSet->getButtonByNameAndValue('cmd', 'c1');
+    $button2 = $formSet->getButtonByNameAndValue('cmd', 'c2');
+    $button3 = $formSet->getButtonByNameAndValue('cmd', 'c3');
+
+    assertThat($button1, is(null));
+    assertThat($button2, isNot(null));
+    assertThat($button3, isNot(null));
+}
+
 function buildsTextArea() {
     $html = '<form><textarea name="a1"> Hello </textarea></form>';
 

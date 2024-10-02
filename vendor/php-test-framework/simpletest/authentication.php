@@ -1,21 +1,11 @@
 <?php
-/**
- *  Base include file for SimpleTest
- *  @package    SimpleTest
- *  @subpackage WebTester
- */
-/**
- *  include http class
- */
-require_once dirname(__FILE__) . '/http.php';
 
 /**
  *    Represents a single security realm's identity.
  *    @package SimpleTest
  *    @subpackage WebTester
  */
-class SimpleRealm
-{
+class SimpleRealm {
     private $type;
     private $root;
     private $username;

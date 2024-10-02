@@ -17,6 +17,25 @@ function getEmployeeIdByName(string $employeeName): ?string {
     return $element->getAttributeValue('data-employee-id');
 }
 
+function getTaskIdByDescription(string $description): ?string {
+    $element = getBrowser()->getElementByInnerText($description);
+
+    if ($element === null) {
+        $message = sprintf("Page did not contain element with text '%s'",
+            $description);
+
+        throw new stf\FrameworkException(ERROR_D01, $message);
+    }
+
+    $taskId = $element->getAttributeValue('data-task-id');
+
+    if ($taskId !== NULL) {
+        return $taskId;
+    } else {
+        throw new stf\FrameworkException(ERROR_D01, "Did not find attribute 'data-task-id'");
+    }
+}
+
 function getProfilePictureUrl(string $employeeId): ?string {
     $elements = getBrowser()->getElements();
 
@@ -30,12 +49,44 @@ function getProfilePictureUrl(string $employeeId): ?string {
     return null;
 }
 
-function gotoLandingPage(): void {
+function getEmployeeTaskCount(string $employeeId): ?string {
+    $elements = getBrowser()->getElements();
+
+    $elementId = 'employee-task-count-' . $employeeId;
+
+    foreach ($elements as $element) {
+        if ($element->getAttributeValue('id') === $elementId) {
+            return $element->getInnerText();
+        }
+    }
+
+    return null;
+}
+
+function getTaskState(string $taskId): ?string {
+    $elements = getBrowser()->getElements();
+
+    $elementId = 'task-state-' . $taskId;
+
+    foreach ($elements as $element) {
+        if ($element->getAttributeValue('id') === $elementId) {
+            return strtolower(trim($element->getInnerText()));
+        }
+    }
+
+    return null;
+}
+
+function gotoDashboardPage(): void {
     $landingPageUrl = getGlobals()->baseUrl->asString();
 
     navigateTo($landingPageUrl);
 
     assertCorrectPageId('dashboard-page');
+}
+
+function gotoLandingPage(): void {
+    gotoDashboardPage();
 }
 
 function clickEmployeeFormLink(): void {
@@ -56,16 +107,22 @@ function clickTaskFormLink(): void {
     assertCorrectPageId('task-form-page');
 }
 
+function clickTaskListLink(): void {
+    clickLinkWithId('task-list-link');
+
+    assertCorrectPageId('task-list-page');
+}
+
 function clickEmployeeFormSubmitButton(): void {
     clickButton('submitButton');
 
     assertCorrectPageId('employee-list-page');
 }
 
-function clickBookFormDeleteButton(): void {
+function clickEmployeeFormDeleteButton(): void {
     clickButton('deleteButton');
 
-    assertCorrectPageId('book-list-page');
+    assertCorrectPageId('employee-list-page');
 }
 
 function clickTaskFormSubmitButton(): void {
@@ -74,10 +131,10 @@ function clickTaskFormSubmitButton(): void {
     assertCorrectPageId('task-list-page');
 }
 
-function clickAuthorFormDeleteButton(): void {
+function clickTaskFormDeleteButton(): void {
     clickButton('deleteButton');
 
-    assertCorrectPageId('author-list-page');
+    assertCorrectPageId('task-list-page');
 }
 
 function assertCorrectPageId($expectedPageId): void {
@@ -134,24 +191,43 @@ function getSampleEmployee(): Employee {
         getRandomString(5),
         getRandomString(6),
         'position.manager',
-        true,
-        'img/test.jpg',
-        getRandomString(6) . "\x01\x02\x03"
+        sprintf('img/%s.bmp', getRandomString(5)),
+        getRandomImage()
     );
 }
 
-function insertSampleAuthor(): string {
+function getRandomImage() {
+    $path = __DIR__ . '/image-template.bmp';
+    $fh = fopen($path, 'rb');
+    $fileContents = fread($fh, filesize($path));
+    fclose($fh);
+
+    $byteArray = array_values(unpack('C*', $fileContents));
+
+    $lastIndex = array_key_last($byteArray);
+
+    $byteArray[$lastIndex - 1] = rand(0, 250);
+    $byteArray[$lastIndex - 2] = rand(0, 250);
+    $byteArray[$lastIndex - 3] = rand(0, 250);
+
+    return pack('C*', ...$byteArray);
+}
+
+function insertSampleEmployee(): Employee {
 
     gotoLandingPage();
 
-    clickTaskFormLink();
+    clickEmployeeFormLink();
 
-    $author = getSampleTask();
+    $employee = getSampleEmployee();
 
-    setTextFieldValue('firstName', $author->firstName);
-    setTextFieldValue('lastName', $author->lastName);
+    setTextFieldValue('firstName', $employee->firstName);
+    setTextFieldValue('lastName', $employee->lastName);
 
-    clickTaskFormSubmitButton();
+    clickEmployeeFormSubmitButton();
 
-    return $author->firstName . ' ' . $author->lastName;
+    $employee->id = getEmployeeIdByName(
+        $employee->firstName . ' ' . $employee->lastName);
+
+    return $employee;
 }

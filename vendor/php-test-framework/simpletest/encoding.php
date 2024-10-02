@@ -5,12 +5,6 @@
  *  @subpackage WebTester
  */
 
-/**#@+
- *  include other SimpleTest class files
- */
-require_once dirname(__FILE__) . '/socket.php';
-/**#@-*/
-
 /**
  *    Single post parameter.
  *    @package SimpleTest

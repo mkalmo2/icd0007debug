@@ -58,9 +58,14 @@ class Page {
     }
 
     public function getElementByInnerText(string $text) : ?Element {
-        return array_values(array_filter($this->elements, function ($element) use ($text) {
+        $elements = array_values(array_filter($this->elements, function ($element) use ($text) {
             return trim($element->getInnerText()) === $text;
-        }))[0] ?? null;
+        }));
+
+        // last: find the inner element
+        // outer elements have the same innerText
+
+        return count($elements) ? $elements[array_key_last($elements)] : null;
     }
 
     public function getSource(): string {

@@ -14,6 +14,12 @@ class Element {
         $this->innerText = $innerText;
     }
 
+    public static function createElement(array $attributes): Element {
+        $node = new TagNode('dummy', $attributes);
+
+        return new Element($node, 'dummy inner text');
+    }
+
     public function getId(): ?string {
         return $this->node->getAttributeValue('id');
     }

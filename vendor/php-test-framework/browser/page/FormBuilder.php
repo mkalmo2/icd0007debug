@@ -90,8 +90,20 @@ class FormBuilder {
     }
 
     private function isButton($element): bool {
-        return ($element->getTagName() === 'button' || $element->getTagName() === 'input')
-            && $element->getAttributeValue('type') === 'submit';
+        if ($element->getTagName() === 'input'
+            && $element->getAttributeValue('type') === 'submit') {
+            return true;
+        } else if ($element->getTagName() === 'button'
+            && !$element->getAttributeValue('type')) {
+
+            return true;
+        } else if ($element->getTagName() === 'button'
+            && $element->getAttributeValue('type') === 'submit') {
+
+            return true;
+        }
+
+        return false;
     }
 
     private function isTextArea($element): bool {

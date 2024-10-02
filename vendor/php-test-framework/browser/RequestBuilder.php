@@ -29,12 +29,11 @@ class RequestBuilder {
         $request->addParameter($button->getName(), $button->getValue());
 
         foreach ($form->getFields() as $field) {
-            if ($field->getValue() !== null) {
-                $request->addParameter($field->getName(), $field->getValue());
-            }
             if ($field->isFile()) {
                 $request->addFileParameter($field->getName(),
                     $field->getPath(), $field->getContents());
+            } else if ($field->getValue() !== null) {
+                $request->addParameter($field->getName(), $field->getValue());
             }
         }
 

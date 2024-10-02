@@ -69,7 +69,7 @@ class NodeTree {
             $childTexts = [...$childTexts, ...$childTextLines];
         }
 
-        return array_filter($childTexts);
+        return $childTexts;
     }
 
 

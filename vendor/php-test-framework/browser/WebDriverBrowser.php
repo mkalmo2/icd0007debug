@@ -85,7 +85,17 @@ class WebDriverBrowser implements Browser {
     }
 
     function getElementByInnerText(string $innerText): ?Element {
-        throw new Error('not implemented');
+        $xpath = sprintf("//*[contains(text(), '%s')]", $innerText);
+        $domNode = $this->getElement(WebDriverBy::xpath($xpath));
+
+        $requiredAttributes = ['data-employee-id', 'data-task-id'];
+
+        $dict = [];
+        foreach ($requiredAttributes as $attribute) {
+            $dict[$attribute] = $domNode->getAttribute($attribute);
+        }
+
+        return Element::createElement($dict);
     }
 
     function getElements(): array {

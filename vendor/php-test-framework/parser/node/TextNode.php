@@ -12,11 +12,11 @@ class TextNode extends AbstractNode {
         $this->text = $text;
     }
 
-    public function getText() : string {
+    public function getText(): string {
         return $this->text;
     }
 
-    public function render($scope) : string {
+    public function render($scope): string {
         return $scope->replaceCurlyExpression($this->text);
     }
 
