@@ -40,7 +40,7 @@ test('Checks correct radio', function () {
     assertThat(getFieldValue('grade'), is('4'));
 });
 
-test('Checks correct radio', function () {
+test('Calculates arithmetic expressions', function () {
     navigateTo(BASE_URL . '/calc/');
 
     setTextFieldValue('number', '4');
