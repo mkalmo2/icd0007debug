@@ -1,9 +1,6 @@
 Silumise ja testimise ülesanded
 
-Ülesanneteks vajalikud failid leiate aadressilt
-https://github.com/mkalmo2/icd0007debug.
-
-Kopeerige harjutustunni projekti (icd0007debug) juurkausta sisu oma
+Kopeerige praktikumi projekti (icd0007debug) juurkausta sisu oma
 projekti (icd0007) kausta "ex5". NB! .git ja .idea kataloogi ärge
 kopeerige.
 
